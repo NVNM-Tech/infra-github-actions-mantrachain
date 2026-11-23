@@ -35,6 +35,12 @@ inputs:
     description: 'The reference for the cache (e.g., for type=registry).'
     required: false
     default: ''
+  submodules:
+    description: >-
+      Passed to actions/checkout `submodules`. "false" leaves submodule directories empty, so a Dockerfile
+      that COPYs from a submodule fails with "not found"; "true" checks out one level, "recursive" all levels.
+    required: false
+    default: "false"
 
 outputs: { }
 
@@ -44,6 +50,8 @@ runs:
   -
     name: Checkout
     uses: actions/checkout@v4
+    with:
+      submodules: ${{ inputs.submodules }}
   - 
     name: Docker meta
     id: meta
